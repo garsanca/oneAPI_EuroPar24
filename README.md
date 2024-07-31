@@ -14,7 +14,7 @@
     
 # Lab's Setup
 ## Repository 
-* It can be easily downloaded by cloning the repository using the command  ```git clone https://github.com/garsanca/oneAPI_IberianTour23```
+* It can be easily downloaded by cloning the repository using the command  ```git clone https://github.com/garsanca/oneAPI_EuroPar24.git```
 
 ## Slides
 * All the material is available in the repository in the [Slides](Slides/)
@@ -234,18 +234,6 @@ uXXXX@idc-beta-batch-pvc-node-04:~$  ./vector
 482 484 486 488 490 492 494 496 498 500 502 504 506 508 510 512 
 
 ```
-
-## Training and inference with optimazed PyTorch
-* Intel boosts performance on CPUs and GPUs through the Extension
-* Open-source code available on GitHub
-    * [CPU](https://github.com/intel/intel-extension-for-pytorch/tree/cpu-master): Code and [documentation](https://intel.github.io/intel-extension-for-pytorch/cpu/latest/)
-    * [GPU](https://github.com/intel/intel-extension-for-pytorch/tree/xpu-master): Code and [documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/)
-
-![Imagen](figures/Intel-Extension-for-PyTorch-structure.png)
-
-* The [jupyter notebook](ipex/IntelPyTorch_GPU_InferenceOptimization_with_AMP/IntelPyTorch_GPU_InferenceOptimization_with_AMP.ipynb) shows an exmaple of the [ResNet50](https://pytorch.org/vision/main/models/generated/torchvision.models.resnet50.html) training code in PyTorch, being able to perform the training in different devices: CPU, CPU (AMX), GPU(FP32/BF16)
-     * It evaluates the performance and the precision used in the model
-     * NOTE: to be performed in the Intel Developer Cloud the **pytorch-gpu** environment should be pre-selected
 
 # To-Do
 ## Image processing
