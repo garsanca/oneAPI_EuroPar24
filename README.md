@@ -20,12 +20,82 @@
 * All the material is available in the repository in the [Slides](Slides/)
    
    
-## Intel Developer Cloud Account
+## New Tiber Developer Cloud
 * The [Intel® Developer Cloud](https://www.intel.com/content/www/us/en/developer/tools/devcloud/services.html) is a free development workspace for the developer community to program applications
 
 ![Imagen](figures/Intel-IDC.png)
 
-**.... TODO ....**
+* Multiple configurations catering to various workloads
+    * From AI training and inference
+    * ... prototyping and evaluating the latest hardware using the environment that best suits your business needs...
+* Learn with practical tutorials
+    * Experiment with real-world code examples
+    * Evaluate performance and acceleration with multiple hardware configurations.
+    * Create heterogeneous applications
+
+## Available Hardware
+* Test and evaluate a variety of virtual machines
+    * Bare metal systems
+    * Edge devices
+    * Platforms for AI training
+* Development environments
+    * Containers
+    * JupyterLabs
+    * Direct SSH connection
+
+## Access Instructions
+* Documentation and updates available at [https://console.cloud.intel.com](https://console.cloud.intel.com/docs/guides/get_started.html) with [Tutorials](https://console.cloud.intel.com/docs/tutorials/index.html)
+
+![Imagen](figures/Tiber-newuser.jpg)
+
+ To have an account on [Intel® Tiber Developer Cloud](https://www.intel.com/content/www/us/en/developer/tools/devcloud/services.html) follow the link \url{http://cloud.intel.com}
+* Follow the steps in the registration process:
+
+\centering{\includegraphics[height=.8\textheight]{figures/Tiber-newuser.jpg}}
+
+## Training
+* Quickly launch a training node in the SLURM cluster.
+* **No SSH key** is required 
+1. Visit the Intel® Tiber™ Developer Cloud [Console](https://console.cloud.intel.com/training)
+2. In the menu at left, click *Training*
+3. Click *Launch* to open a training notebook
+
+## Training C++ SYCL
+* Essentials of SYCL (some examples will be shown in the workshop)
+* Migrate from CUDA to C++ with SYCL (also shown in this workshop)
+* Performance, Portability and Productivity
+* Introduction to GPU 
+
+
+## Example (I)
+1. Let's take an example SYCL code that returns the selected device, in this case, a GPU.
+
+```c
+#include <sycl/sycl.hpp>
+using namespace sycl;
+int main() {
+//# Create a device queue with device selector
+  queue q(gpu_selector_v);
+//# Print the device name
+  std::cout << "Device: " << q.get_device().get_info<info::device::name>() << "\n";
+  return 0;
+}
+```
+
+2. Compile it with the **icpx** compiler
+```bash
+uXXXX@idc-beta-batch-pvc-node-03:~$ icpx -o ex exampleSYCL.cpp -fsycl
+```
+
+## Launch Instance
+* More info in [Get Started](https://console.cloud.intel.com/docs/guides/get_started.html#launch-instance)
+* **Note:** **SSH key** is required
+1. Upload an SSH Key
+2. Configure instance
+3. Launch instance
+
+![Imagen](figures/Tiber-instances.jpg)
+
 
 # Examples
 
@@ -178,12 +248,12 @@ free(c, Q);
 1. Download the CUDA headers with the command ```git clone --recursive https://gitlab.com/nvidia/headers/cuda.git```
 2. Prepare the compacted headers in a single directory:
 ```bash
-uXXXX@idc-beta-batch-head-node:~$ git clone --recursive https://gitlab.com/nvidia/headers/cuda.git
-uXXXX@idc-beta-batch-head-node:~$ mkdir cuda-headers/
-uXXXX@idc-beta-batch-head-node:~$ cp -r cuda/cudart/* cuda-headers/
-uXXXX@idc-beta-batch-head-node:~$ cp -r cuda/curand/* cuda-headers/
-uXXXX@idc-beta-batch-head-node:~$ cp -r cuda/nvcc/crt/ cuda-headers/
-uXXXX@idc-beta-batch-head-node:~$ cp cuda/cublas/* cuda-headers/
+uXXXX@idc-training-gpu-compute~$ git clone --recursive https://gitlab.com/nvidia/headers/cuda.git
+uXXXX@idc-training-gpu-compute:~$ mkdir cuda-headers/
+uXXXX@idc-training-gpu-compute:~$ cp -r cuda/cudart/* cuda-headers/
+uXXXX@idc-training-gpu-compute:~$ cp -r cuda/curand/* cuda-headers/
+uXXXX@idc-training-gpu-compute:~$ cp -r cuda/nvcc/crt/ cuda-headers/
+uXXXX@idc-training-gpu-compute:~$ cp cuda/cublas/* cuda-headers/
 ```
 ### Example
 * To illustrate the operation of the DPCT tool, we will use the example of vector addition that can be found in [GitHub](https://github.com/oneapi-src/oneAPI-samples/tree/master/Tools/Migration/vector-add-dpct)
@@ -197,7 +267,7 @@ uXXXX@idc-beta-batch-head-node:~$ cp cuda/cublas/* cuda-headers/
 * The CUDA source codes are located in the folder [DPCT-examples](DPCT-examples/vector-add-dpct/), so it is posssible to use the SYCLomatic tool
 * Let's start to illustrate the migration of [a single CUDA source code](DPCT-examples/vector-add-dpct/src/vector_add.cu)
 ```bash
-uXXXX@idc-beta-batch-pvc-node-04:~$ c2s --cuda-include-path=/home/uXXXX/cuda-headers/ --out-root=. vector-add-dpct/src/vector_add.cu
+uXXXX@idc-training-gpu-compute:~$ c2s --cuda-include-path=/home/uXXXX/cuda-headers/ --out-root=. vector-add-dpct/src/vector_add.cu
 NOTE: Could not auto-detect compilation database for file 'vector_add.cu' in '/home/uXXXX/vector-add-dpct/src' or any parent directory.
 Parsing: /home/uXXXX/vector-add-dpct/src/vector_add.cu
 Analyzing: /home/uXXXX/vector-add-dpct/src/vector_add.cu
@@ -213,8 +283,8 @@ https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-c
 * Now, We are now able to compile the code generated with the **icpx** compiler and run it:
 
 ```bash
-uXXXX@idc-beta-batch-pvc-node-04:~$  icpx -o vector vector_add.dp.cpp -fsycl
-uXXXX@idc-beta-batch-pvc-node-04:~$  ./vector
+uXXXX@idc-training-gpu-compute:~$  icpx -o vector vector_add.dp.cpp -fsycl
+uXXXX@idc-training-gpu-compute:~$  ./vector
 
   2   4   6   8  10  12  14  16  18  20  22  24  26  28  30  32 
  34  36  38  40  42  44  46  48  50  52  54  56  58  60  62  64 
@@ -276,10 +346,10 @@ uXXXX@idc-beta-batch-pvc-node-04:~$  ./vector
     * NOTE: Comment out lines 91-96 requesting knowledge of the device, as this is specific to the CUDA API
 
 ```bash
-uXXXX@idc-beta-batch-pvc-node-04:~$  git clone https://github.com/NVIDIA/cuda-samples.git
-uXXXX@idc-beta-batch-pvc-node-04:~$  cd cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS
-uXXXX@idc-beta-batch-pvc-node-04:~/cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS$ intercept-build make
-uXXXX@idc-beta-batch-pvc-node-04:~/cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS$ c2s --cuda-include-path=/home/uXXXX/cuda-headers/  -p compile_commands.json
-uXXXX@idc-beta-batch-pvc-node-04:~/cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS$ icpx -o simpleCUBLAS dpct_output/simpleCUBLAS.cpp.dp.cpp -fsycl  -L${MKLROOT}/lib/intel64 -lsycl -lOpenCL -lpthread -lm -ldl -DMKL_ILP64  -qmkl=parallel  -I../../../Common/
+uXXXX@idc-training-gpu-compute:~$  git clone https://github.com/NVIDIA/cuda-samples.git
+uXXXX@idc-training-gpu-compute:~$  cd cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS
+uXXXX@idc-training-gpu-compute:~/cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS$ intercept-build make
+uXXXX@idc-training-gpu-compute:~/cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS$ c2s --cuda-include-path=/home/uXXXX/cuda-headers/  -p compile_commands.json
+uXXXX@idc-training-gpu-compute:~/cuda-samples/Samples/4_CUDA_Libraries/simpleCUBLAS$ icpx -o simpleCUBLAS dpct_output/simpleCUBLAS.cpp.dp.cpp -fsycl  -L${MKLROOT}/lib/intel64 -lsycl -lOpenCL -lpthread -lm -ldl -DMKL_ILP64  -qmkl=parallel  -I../../../Common/
 ```
 
