@@ -48,10 +48,7 @@
 
 ![Imagen](figures/Tiber-newuser.jpg)
 
- To have an account on [Intel® Tiber Developer Cloud](https://www.intel.com/content/www/us/en/developer/tools/devcloud/services.html) follow the link \url{http://cloud.intel.com}
-* Follow the steps in the registration process:
-
-\centering{\includegraphics[height=.8\textheight]{figures/Tiber-newuser.jpg}}
+ To have an account on [Intel® Tiber Developer Cloud](https://www.intel.com/content/www/us/en/developer/tools/devcloud/services.html) follow the [link](http://cloud.intel.com)
 
 ## Training
 * Quickly launch a training node in the SLURM cluster.
